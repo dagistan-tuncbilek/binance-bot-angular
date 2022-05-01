@@ -1,0 +1,76 @@
+<div class="px-5 mt-3">
+  <div class="d-flex justify-content-between">
+    <h1>DT-RAIDER</h1>
+    <a class="font-weight-bold mt-3" [routerLink]="['/app-logs']">App-Logs</a>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-6">
+      <h3 class="text-center">Coins</h3>
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-sm btn-warning" (click)="fetchBasket()">Refresh</button>
+        <span><b>Total Value : </b>{{totalValue}}</span>
+      </div>
+
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Asset</th>
+          <th scope="col">Symbol</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Market Price</th>
+          <th scope="col">Average Price</th>
+          <th scope="col">Overflow</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let coin of coins">
+          <th scope="row">1</th>
+          <td>{{coin.asset}}</td>
+          <td>{{coin.symbol}}</td>
+          <td>{{coin.amount}}</td>
+          <td>{{coin.marketPrice}}</td>
+          <td>{{coin.averagePrice.toFixed(6)}}</td>
+          <td class="text-center">{{coin.overflow}}</td>
+        </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+
+    <div class="col-6">
+      <h3 class="text-center">Trades</h3>
+      <button class="btn btn-sm btn-warning" (click)="fetchTrades()">Refresh</button>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Symbol</th>
+          <th scope="col">Side</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Type</th>
+          <th scope="col">Date Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let trade of trades">
+          <th scope="row">1</th>
+          <td>{{trade.symbol}}</td>
+          <td>{{trade.side}}</td>
+          <td>{{trade.price}}</td>
+          <td>{{trade.qty}}</td>
+          <td>{{trade.type}}</td>
+          <td class="text-center">{{trade.createdAt | date : 'medium' }}</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+</div>

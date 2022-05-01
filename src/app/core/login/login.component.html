@@ -1,0 +1,21 @@
+<form [formGroup]="form" class="container d-flex flex-column align-items-center mt-5">
+  <h2 class="text-center">Login</h2>
+  <div>
+    <label class="me-5 mt-5">Email</label>
+    <input
+      formControlName="username"
+    >
+  </div>
+
+
+  <div>
+    <label class="me-4 mt-5">Password</label>
+    <input
+      formControlName="password"
+      type="password"
+    >
+  </div>
+
+  <button class="btn btn-primary mt-5" (click)="onSubmit()" [disabled]="form.invalid">Submit</button>
+
+</form>
