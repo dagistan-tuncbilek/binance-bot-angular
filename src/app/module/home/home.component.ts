@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   trades: Trade[] = [];
   coins: Coin[] = [];
-  marketPrices: MarketPrice[] = [];
+  mp: MarketPrice[] = [];
   totalValue = 0;
 
   constructor(private databaseService: DatabaseService, private router: Router, private spinner: NgxSpinnerService) { }
@@ -46,11 +46,22 @@ export class HomeComponent implements OnInit {
     this.spinner.show();
     this.databaseService.coins().subscribe({
       next: response => {
+        this.mp = response.marketPrices;
         this.coins = response.coins;
+        const averageFiatRatio = this.coins.reduce((a,b) => {
+          const marketPrice = this.mp.find(p => p.symbol === b.symbol);
+          console.log(marketPrice)
+          if (marketPrice){
+            return a + (+marketPrice.price / b.averagePrice);
+          }
+          return a;
+        },0) / this.mp.length;
+
         this.coins.map(c => {
-          const marketPrice = response.marketPrices.find(p => p.symbol === c.symbol);
+          const marketPrice = this.mp.find(p => p.symbol === c.symbol);
           if (marketPrice){
             c.marketPrice = +marketPrice.price;
+            c.fiatRatio = (c.marketPrice / c.averagePrice) / averageFiatRatio;
           }
           return c;
         });
@@ -60,7 +71,7 @@ export class HomeComponent implements OnInit {
             this.totalValue += coin.marketPrice * coin.amount;
           }
         }
-        this.marketPrices = response.marketPrices;
+        this.mp = response.marketPrices;
         this.spinner.hide();
       },
       error: err => {
