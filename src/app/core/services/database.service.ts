@@ -12,7 +12,7 @@ import {AppLog} from "../models/app-log";
   providedIn: 'root'
 })
 export class DatabaseService {
-  private baseUrl = environment.baseUrl;
+  baseUrl = '';
   accessToken = '';
 
   constructor(private http: HttpClient) { }

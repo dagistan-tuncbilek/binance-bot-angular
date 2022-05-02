@@ -20,7 +20,7 @@
           <th scope="col">#</th>
           <th scope="col">Asset</th>
           <th scope="col">Symbol</th>
-          <th scope="col">Amount</th>
+          <th scope="col">Value</th>
           <th scope="col">Market Price</th>
           <th scope="col">Average Price</th>
           <th scope="col">Fiat/Ratio</th>
@@ -28,11 +28,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let coin of coins">
-          <th scope="row">1</th>
+        <tr *ngFor="let coin of coins; let i = index">
+          <th scope="row">{{ i + 1}}</th>
           <td>{{coin.asset}}</td>
           <td>{{coin.symbol}}</td>
-          <td>{{coin.amount}}</td>
+          <td>{{coin.value | currency}}</td>
           <td>{{coin.marketPrice}}</td>
           <td>{{coin.averagePrice.toFixed(6)}}</td>
           <td>{{coin.fiatRatio}}</td>
@@ -60,8 +60,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let trade of trades">
-          <th scope="row">1</th>
+        <tr *ngFor="let trade of trades; let i = index">
+          <th scope="row">{{i + 1}}</th>
           <td>{{trade.symbol}}</td>
           <td>{{trade.side}}</td>
           <td>{{trade.price}}</td>

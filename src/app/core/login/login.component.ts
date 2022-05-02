@@ -36,13 +36,18 @@ export class LoginComponent implements OnInit, OnDestroy {
         username: this.form.value.username.trim(),
         password: this.form.value.password.trim(),
       }
+      this.spinner.show();
       this.databaseService.login(data).subscribe({
         next: response => {
           window.localStorage.setItem('accessToken', response.access_token);
           this.databaseService.accessToken = response.access_token;
+          this.spinner.hide();
           this.router.navigate(['/']);
         },
-        error: err => console.log(err)
+        error: err => {
+          this.spinner.hide();
+          console.log(err);
+        }
       })
     }
   }

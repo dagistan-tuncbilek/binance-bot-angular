@@ -62,6 +62,7 @@ export class HomeComponent implements OnInit {
           if (marketPrice){
             c.marketPrice = +marketPrice.price;
             c.fiatRatio = (c.marketPrice / c.averagePrice) / averageFiatRatio;
+            c.value = c.marketPrice ? c.marketPrice * c.amount : c.amount
           }
           return c;
         });
