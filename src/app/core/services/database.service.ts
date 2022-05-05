@@ -12,8 +12,12 @@ import {AppLog} from "../models/app-log";
   providedIn: 'root'
 })
 export class DatabaseService {
+
   baseUrl = '';
   accessToken = '';
+  trades: Trade[] = [];
+  coins: Coin[] = [];
+  mp: MarketPrice[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -23,13 +27,13 @@ export class DatabaseService {
       .pipe(catchError((error) => throwError(() => DatabaseService.getErrorMessage(error))));
   }
 
-  trades() {
+  getTrades() {
     return this.http
       .get<Trade[]>(`${this.baseUrl}/crypto/trades`)
       .pipe(catchError((error) => throwError(() => DatabaseService.getErrorMessage(error))));
   }
 
-  coins() {
+  getCoins() {
     return this.http
       .get<{coins: Coin[], marketPrices: MarketPrice[]}>(`${this.baseUrl}/crypto/coins`)
       .pipe(catchError((error) => throwError(() => DatabaseService.getErrorMessage(error))));
@@ -53,6 +57,12 @@ export class DatabaseService {
       .pipe(catchError((error) => throwError(() => DatabaseService.getErrorMessage(error))));
   }
 
+  createCoin(data: { symbol: string; asset: string }) {
+    return this.http
+      .post<Coin>(`${this.baseUrl}/crypto/add-coin`, data)
+      .pipe(catchError((error) => throwError(() => DatabaseService.getErrorMessage(error))));
+  }
+
   private static getErrorMessage(errorRes: ErrorResponse): string {
     let errorMessage = '';
     if (errorRes.status != null && errorRes.status == 0) {
@@ -71,4 +81,5 @@ export class DatabaseService {
     console.log(errorMessage);
     return errorMessage;
   }
+
 }

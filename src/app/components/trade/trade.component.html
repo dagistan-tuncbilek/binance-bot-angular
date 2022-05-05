@@ -1,0 +1,42 @@
+<div class="px-5">
+  <app-header></app-header>
+
+  <form [formGroup]="form" class="col-6 mx-auto">
+
+    <div class="input-group mb-5 d-flex flex-column">
+      <label class="fw-bolder">Add a New Coin</label>
+      <div class="d-flex mt-2" style="height: 2.4rem">
+        <div class="input-group mb-3">
+          <span class="input-group-text">Asset</span>
+          <input type="text" class="form-control" formControlName="asset">
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text">Symbol</span>
+          <input type="text" class="form-control" formControlName="symbol">
+        </div>
+        <button class="btn btn-primary btn-sm" style="width: 12rem" (click)="openDialog('New Coin')">Submit</button>
+      </div>
+    </div>
+
+    <div class="input-group mb-5 d-flex flex-column">
+      <label class="fw-bolder">Sell All To USDT (Percentage)</label>
+      <div class="d-flex mt-2">
+        <input type="number" class="form-control" formControlName="sellAllPercentage">
+        <button class="btn btn-primary btn-sm" style="width: 6rem" (click)="openDialog('Sell All')">Submit</button>
+      </div>
+    </div>
+
+    <div class="input-group mb-5 d-flex flex-column">
+      <label class="fw-bolder">Sell One To USDT (Select a coin to sell and define percentage)</label>
+      <div class="d-flex mt-2">
+        <select class="form-select" aria-label="inputGroup-sell-one" formControlName="sellOneCoin">
+          <option *ngFor="let coin of coins" [value]="coin">{{coin.symbol}}</option>
+        </select>
+        <input type="number" class="form-control" formControlName="sellOnePercentage">
+        <button class="btn btn-primary btn-sm" style="width: 12rem" (click)="openDialog('Sell One')">Submit</button>
+      </div>
+    </div>
+
+  </form>
+
+</div>

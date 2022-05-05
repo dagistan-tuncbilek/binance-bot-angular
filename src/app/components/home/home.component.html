@@ -1,8 +1,5 @@
-<div class="px-5 mt-3">
-  <div class="d-flex justify-content-between">
-    <h1>DT-RAIDER</h1>
-    <a class="font-weight-bold mt-3" [routerLink]="['/app-logs']">App-Logs</a>
-  </div>
+<div class="px-5">
+  <app-header></app-header>
 
 
   <div class="row">
@@ -11,7 +8,7 @@
       <h3 class="text-center">Coins</h3>
       <div class="d-flex justify-content-between">
         <button class="btn btn-sm btn-warning" (click)="fetchBasket()">Refresh</button>
-        <span><b>Total Value : </b>{{totalValue}}</span>
+        <span><b>Total Value : </b>{{totalValue | currency }}</span>
       </div>
 
       <table class="table">

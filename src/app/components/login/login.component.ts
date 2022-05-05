@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NgxSpinnerService} from "ngx-spinner";
 import {ActivatedRoute, Router} from "@angular/router";
-import {DatabaseService} from "../services/database.service";
+import {DatabaseService} from "../../core/services/database.service";
 import {Subject, takeUntil} from "rxjs";
 @Component({
   selector: 'app-login',

@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {LoginComponent} from "./core/login/login.component";
-import {HomeComponent} from "./module/home/home.component";
-import {AppLogsComponent} from "./module/app-logs/app-logs.component";
+import {LoginComponent} from "./components/login/login.component";
+import {HomeComponent} from "./components/home/home.component";
+import {AppLogsComponent} from "./components/app-logs/app-logs.component";
+import {TradeComponent} from "./components/trade/trade.component";
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'trade', component: TradeComponent },
   { path: 'app-logs', component: AppLogsComponent  },
-  { path: '', component: HomeComponent  },
-  { path: '**', component: LoginComponent },
+  { path: 'home', component: HomeComponent  },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 
 @NgModule({
