@@ -18,6 +18,7 @@ export class DatabaseService {
   trades: Trade[] = [];
   coins: Coin[] = [];
   mp: MarketPrice[] = [];
+  totalValue: number = 0;
 
   constructor(private http: HttpClient) { }
 

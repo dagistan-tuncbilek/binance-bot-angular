@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
     }
     if (this.databaseService.coins.length) {
       this.coins = [...this.databaseService.coins];
+      this.totalValue = this.databaseService.totalValue;
     } else {
       this.fetchBasket();
     }
@@ -56,26 +57,29 @@ export class HomeComponent implements OnInit {
       next: response => {
         this.mp = response.marketPrices;
         this.coins = response.coins;
-        this.databaseService.mp = [...this.mp];
-        this.databaseService.coins = [...this.coins];
         const averageFiatRatio = this.coins.reduce((a, b) => {
           const marketPrice = this.mp.find(p => p.symbol === b.symbol);
           if (marketPrice) {
-            return a + (+marketPrice.price / b.averagePrice);
+            return a + (+marketPrice.lastPrice / b.averagePrice);
           }
           return a;
         }, 0) / this.mp.length;
 
-        this.coins.map(c => {
+        this.coins = this.coins.map(c => {
           const marketPrice = this.mp.find(p => p.symbol === c.symbol);
           if (marketPrice) {
-            c.marketPrice = +marketPrice.price;
+            c.marketPrice = +marketPrice.lastPrice;
             c.fiatRatio = (c.marketPrice / c.averagePrice) / averageFiatRatio;
             c.value = c.marketPrice * c.amount;
+            c.change24h = marketPrice.priceChangePercent.slice(0,5) + '%';
           } else {
             c.value = c.amount;
           }
           return c;
+        }).sort((a,b) => {
+          if (!b.change24h) return  -1;
+          if (!a.change24h) return  +1;
+          return +b.change24h.slice(0,5) - +a.change24h.slice(0,5)
         });
         this.totalValue = 0;
         for (const coin of this.coins) {
@@ -83,7 +87,9 @@ export class HomeComponent implements OnInit {
             this.totalValue += coin.marketPrice * coin.amount;
           }
         }
-        this.mp = response.marketPrices;
+        this.databaseService.coins = [...this.coins];
+        this.databaseService.mp = [...this.mp];
+        this.databaseService.totalValue = this.totalValue ;
         this.spinner.hide();
       },
       error: err => {

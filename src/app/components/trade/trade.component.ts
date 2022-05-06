@@ -70,6 +70,7 @@ export class TradeComponent implements OnInit {
       next: coin => {
         this.databaseService.coins.push(coin);
         this.spinner.hide();
+        this.resetForm();
       },
       error: err => {
         this.spinner.hide();
@@ -84,5 +85,15 @@ export class TradeComponent implements OnInit {
 
   private sellOne(data: Coin, sellOnePercentage: number) {
     console.log('sellOne')
+  }
+
+  private resetForm() {
+    this.form.patchValue({
+      asset: '',
+      symbol: '',
+      sellAllPercentage: null,
+      sellOnePercentage: null,
+      sellOneCoin: null,
+    });
   }
 }

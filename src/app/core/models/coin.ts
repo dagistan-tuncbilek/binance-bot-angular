@@ -8,6 +8,5 @@ export class Coin {
   fiatRatio = 1;
   amount: number = -1;
   overflow: number = -1;
-  updatedAt: string = '';
-  createdAt: string = '';
+  change24h: any;
 }

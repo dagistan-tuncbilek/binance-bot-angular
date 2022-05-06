@@ -15,24 +15,24 @@
         <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Asset</th>
           <th scope="col">Symbol</th>
           <th scope="col">Value</th>
           <th scope="col">Market Price</th>
           <th scope="col">Average Price</th>
           <th scope="col">Fiat/Ratio</th>
+          <th scope="col">Change(24h)</th>
           <th scope="col">Overflow</th>
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let coin of coins; let i = index">
           <th scope="row">{{ i + 1}}</th>
-          <td>{{coin.asset}}</td>
           <td>{{coin.symbol}}</td>
           <td>{{coin.value | currency}}</td>
           <td>{{coin.marketPrice}}</td>
           <td>{{coin.averagePrice.toFixed(6)}}</td>
           <td>{{coin.fiatRatio}}</td>
+          <td class="text-center">{{coin.change24h}}</td>
           <td class="text-center">{{coin.overflow}}</td>
         </tr>
         </tbody>
