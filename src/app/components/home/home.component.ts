@@ -40,7 +40,13 @@ export class HomeComponent implements OnInit {
     this.spinner.show();
     this.databaseService.getTrades().subscribe({
       next: trades => {
-        this.trades = trades;
+        const time = Date.now();
+        this.trades = trades.map(trade => {
+            if(time - new Date(trade.createdAt).getTime() < 1000 * 60 * 60 * 24){
+              trade.isToday = true;
+            }
+            return trade;
+        });
         this.databaseService.trades = [...trades];
         this.spinner.hide();
       },
@@ -71,7 +77,13 @@ export class HomeComponent implements OnInit {
             c.marketPrice = +marketPrice.lastPrice;
             c.fiatRatio = (c.marketPrice / c.averagePrice) / averageFiatRatio;
             c.value = c.marketPrice * c.amount;
-            c.change24h = marketPrice.priceChangePercent.slice(0,5) + '%';
+            let priceChangePercent;
+            if (marketPrice.priceChangePercent.startsWith('-')){
+              priceChangePercent = `${marketPrice.priceChangePercent.slice(0,5)}%`;
+            } else {
+              priceChangePercent = `+${marketPrice.priceChangePercent.slice(0,4)}%`;
+            }
+            c.change24h = priceChangePercent;
           } else {
             c.value = c.amount;
           }
@@ -79,7 +91,7 @@ export class HomeComponent implements OnInit {
         }).sort((a,b) => {
           if (!b.change24h) return  -1;
           if (!a.change24h) return  +1;
-          return +b.change24h.slice(0,5) - +a.change24h.slice(0,5)
+          return +b.change24h.slice(0,5) - +a.change24h.slice(0,5);
         });
         this.totalValue = 0;
         for (const coin of this.coins) {

@@ -57,14 +57,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let trade of trades; let i = index">
+        <tr *ngFor="let trade of trades; let i = index" [ngClass]="{'bg-dark text-light': trade.isToday}">
           <th scope="row">{{i + 1}}</th>
           <td>{{trade.symbol}}</td>
           <td>{{trade.side}}</td>
           <td>{{trade.price}}</td>
           <td>{{trade.qty}}</td>
           <td>{{trade.type}}</td>
-          <td>{{trade.createdAt | date : 'medium' }}</td>
+          <td>{{trade.createdAt |  date:'HH:mm, MMM d y'}}</td>
         </tr>
         </tbody>
       </table>
